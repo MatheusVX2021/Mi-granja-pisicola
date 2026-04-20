@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/fragment1"
+        android:icon="@drawable/ic_resumen"
+        android:title="Resumen" />
+    <item
+        android:id="@+id/fragment2"
+        android:icon="@drawable/ic_estanque"
+        android:title="Estanque" />
+    <item
+        android:id="@+id/fragment3"
+        android:icon="@drawable/ic_inventario"
+        android:title="Inventario" />
+    <item
+        android:id="@+id/fragment4"
+        android:icon="@drawable/ic_finanza"
+        android:title="Finanzas" />
+    <item
+        android:id="@+id/fragment5"
+        android:icon="@drawable/ic_persona"
+        android:title="Personas" />
+</menu>
