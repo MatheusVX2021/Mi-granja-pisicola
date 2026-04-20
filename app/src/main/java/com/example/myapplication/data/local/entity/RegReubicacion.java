@@ -9,15 +9,15 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "reg_reubicacion",
         foreignKeys = {
                 @ForeignKey(entity = Estanque.class,
-                        parentColumns = "idEstanque",
+                        parentColumns = "id",
                         childColumns = "idEstanqueOrigen",
                         onDelete = ForeignKey.CASCADE),
                 @ForeignKey(entity = Estanque.class,
-                        parentColumns = "idEstanque",
+                        parentColumns = "id",
                         childColumns = "idEstanqueDestino",
                         onDelete = ForeignKey.CASCADE),
                 @ForeignKey(entity = Lote.class,
-                        parentColumns = "idLote",
+                        parentColumns = "id",
                         childColumns = "idLote",
                         onDelete = ForeignKey.CASCADE)
         },

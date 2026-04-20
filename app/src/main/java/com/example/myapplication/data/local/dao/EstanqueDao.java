@@ -24,6 +24,6 @@ public interface EstanqueDao {
     @Query("SELECT * FROM estanque ORDER BY nombre ASC")
     List<Estanque> getAllEstanques();
 
-    @Query("SELECT * FROM estanque WHERE idEstanque = :id")
+    @Query("SELECT * FROM estanque WHERE id = :id")
     Estanque getEstanqueById(int id);
 }
