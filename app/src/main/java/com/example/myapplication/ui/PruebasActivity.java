@@ -16,7 +16,7 @@ import com.example.myapplication.R;
 
 public class PruebasActivity extends AppCompatActivity {
 
-    private ImageButton ibHome, ibInsertar, ibEditar, ibEliminar, ibMostrarTodos, ibBuscar;
+    private ImageButton ibHome, ibInsertar, ibEditar, ibEliminar, ibMostrarTodos, ibBuscar, ibLimpiarBD;
     private TextView tvInfo;
 
     @Override
@@ -37,6 +37,7 @@ public class PruebasActivity extends AppCompatActivity {
         ibEliminar = findViewById(R.id.ibEliminar);
         ibMostrarTodos = findViewById(R.id.ibMostrarTodos);
         ibBuscar = findViewById(R.id.ibBuscar);
+        ibLimpiarBD = findViewById(R.id.ibLimpiarBD);
         tvInfo = findViewById(R.id.tvInfo);
 
         // Programar botón Home
@@ -47,5 +48,19 @@ public class PruebasActivity extends AppCompatActivity {
         });
 
         // Aquí puedes programar el resto de los botones
+        ibInsertar.setOnClickListener(v -> {
+            String[] entidades = {
+                    "Alimento", "CatGasto", "Cliente", "Especie", "Estanque",
+                    "Gasto", "Lote", "Proveedor", "RegAlimentacion", "RegReubicacion", "Venta"
+            };
+
+            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(PruebasActivity.this);
+            builder.setTitle("Seleccione una entidad para insertar");
+            builder.setItems(entidades, (dialog, which) -> {
+                String seleccion = entidades[which];
+                android.widget.Toast.makeText(PruebasActivity.this, "seleccionaste " + seleccion, android.widget.Toast.LENGTH_SHORT).show();
+            });
+            builder.create().show();
+        });
     }
 }

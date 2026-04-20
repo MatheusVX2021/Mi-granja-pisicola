@@ -45,69 +45,86 @@
 
     <LinearLayout
         android:id="@+id/buttonContainer"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
+        android:orientation="vertical"
         android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <ImageButton
             android:id="@+id/ibInsertar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_margin="4dp"
+            android:background="@drawable/rounded_button_bg"
             android:src="@drawable/ic_add"
             android:contentDescription="Insertar"
             android:scaleType="centerInside" />
 
         <ImageButton
             android:id="@+id/ibEditar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_margin="4dp"
+            android:background="@drawable/rounded_button_bg"
             android:src="@drawable/ic_edit"
             android:contentDescription="Editar"
             android:scaleType="centerInside" />
 
         <ImageButton
             android:id="@+id/ibEliminar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_margin="4dp"
+            android:background="@drawable/rounded_button_bg"
             android:src="@drawable/ic_delete"
             android:contentDescription="Eliminar"
             android:scaleType="centerInside" />
 
         <ImageButton
             android:id="@+id/ibMostrarTodos"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_margin="4dp"
+            android:background="@drawable/rounded_button_bg"
             android:src="@drawable/ic_showall"
             android:contentDescription="Mostrar Todos"
             android:scaleType="centerInside" />
 
         <ImageButton
             android:id="@+id/ibBuscar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_margin="4dp"
+            android:background="@drawable/rounded_button_bg"
             android:src="@drawable/ic_search"
             android:contentDescription="Buscar"
+            android:scaleType="centerInside" />
+
+        <ImageButton
+            android:id="@+id/ibLimpiarBD"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/rounded_button_bg"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="Limpiar Base de Datos"
             android:scaleType="centerInside" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Info:"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonContainer" />
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonContainer"
+        app:layout_constraintTop_toTopOf="@+id/buttonContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
