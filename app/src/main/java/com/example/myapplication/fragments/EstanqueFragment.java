@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.myapplication.FileUtils;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.EstanqueAdapter;
 import com.example.myapplication.data.local.entity.Estanque;
@@ -42,15 +43,12 @@ public class EstanqueFragment extends Fragment implements EstanqueAdapter.OnEsta
             new ActivityResultContracts.OpenDocument(),
             uri -> {
                 if (uri != null && estanqueSeleccionadoParaImagen != null) {
-                    try {
-                        final int takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION;
-                        requireContext().getContentResolver().takePersistableUriPermission(uri, takeFlags);
-                        
-                        actualizarImagenEstanque(estanqueSeleccionadoParaImagen.getId(), uri.toString());
-                    } catch (SecurityException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getContext(), "Error al obtener permisos de imagen", Toast.LENGTH_SHORT).show();
-                    }
+                    executor.execute(() -> {
+                        String localUri = FileUtils.saveImageToInternalStorage(requireContext(), uri);
+                        if (localUri != null) {
+                            actualizarImagenEstanque(estanqueSeleccionadoParaImagen.getId(), localUri);
+                        }
+                    });
                 }
             }
     );

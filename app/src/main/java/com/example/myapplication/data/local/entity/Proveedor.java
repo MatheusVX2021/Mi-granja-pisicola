@@ -12,13 +12,15 @@ public class Proveedor {
     private String nombre;
     private String tipo;
     private String direccion;
+    private String celular;
 
     public Proveedor(){}
 
-    public Proveedor(String nombre, String tipo, String direccion){
+    public Proveedor(String nombre, String tipo, String direccion, String celular){
         this.nombre = nombre;
         this.tipo = tipo;
         this.direccion = direccion;
+        this.celular = celular;
     }
 
     public int getId() {return id;}
@@ -29,4 +31,6 @@ public class Proveedor {
     public void setNombre(String nombre) {this.nombre = nombre;}
     public String getDireccion() {return direccion;}
     public void setDireccion(String direccion) {this.direccion = direccion;}
+    public String getCelular() {return celular;}
+    public void setCelular(String celular) {this.celular = celular;}
 }

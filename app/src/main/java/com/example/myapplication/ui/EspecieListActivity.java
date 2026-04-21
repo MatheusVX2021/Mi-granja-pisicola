@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.myapplication.FileUtils;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.EspecieAdapter;
 import com.example.myapplication.data.local.entity.Especie;
@@ -38,14 +39,13 @@ public class EspecieListActivity extends AppCompatActivity implements EspecieAda
             new ActivityResultContracts.OpenDocument(),
             uri -> {
                 if (uri != null && especieSeleccionadaParaImagen != null) {
-                    try {
-                        final int takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION;
-                        getContentResolver().takePersistableUriPermission(uri, takeFlags);
-                    } catch (SecurityException e) {
-                        e.printStackTrace();
-                    }
-                    especieSeleccionadaParaImagen.setImagen(uri.toString());
-                    especieRep.update(especieSeleccionadaParaImagen, this::cargarEspecies);
+                    executorService.execute(() -> {
+                        String localUri = FileUtils.saveImageToInternalStorage(this, uri);
+                        if (localUri != null) {
+                            especieSeleccionadaParaImagen.setImagen(localUri);
+                            especieRep.update(especieSeleccionadaParaImagen, this::cargarEspecies);
+                        }
+                    });
                 }
             }
     );
