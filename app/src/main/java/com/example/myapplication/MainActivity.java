@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
@@ -12,10 +13,16 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.myapplication.data.local.database.AppDatabase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class MainActivity extends AppCompatActivity {
+
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         int id = item.getItemId();
         
-        // Aquí puedes poner la accion de la opcion seleccionada
         if (id == R.id.action_1) {
             android.widget.Toast.makeText(this, "Seleccionaste Acción 1", android.widget.Toast.LENGTH_SHORT).show();
             return true;
@@ -68,10 +74,47 @@ public class MainActivity extends AppCompatActivity {
             android.widget.Toast.makeText(this, "Seleccionaste Acción 2", android.widget.Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.action_3) {
-            android.widget.Toast.makeText(this, "Seleccionaste Acción 3", android.widget.Toast.LENGTH_SHORT).show();
+            mostrarDialogoConfirmacionEliminar();
             return true;
         }
         
         return super.onOptionsItemSelected(item);
+    }
+
+    private void mostrarDialogoConfirmacionEliminar() {
+        new AlertDialog.Builder(this)
+                .setTitle("Eliminar base de datos")
+                .setMessage("¿Seguro que quieres eliminar? Si lo haces no hay marcha atrás.")
+                .setPositiveButton("OK", (dialog, which) -> mostrarDialogoSeguridad())
+                .setNegativeButton("Cancelar", null)
+                .show();
+    }
+
+    private void mostrarDialogoSeguridad() {
+        new AlertDialog.Builder(this)
+                .setTitle("Confirmación de seguridad")
+                .setMessage("Solo para asegurarnos que no presionaste borrar por accidente, ¿estás seguro?")
+                .setPositiveButton("SÍ, ELIMINAR TODO", (dialog, which) -> eliminarBaseDeDatos())
+                .setNegativeButton("No, cancelar", null)
+                .show();
+    }
+
+    private void eliminarBaseDeDatos() {
+        executorService.execute(() -> {
+            AppDatabase db = AppDatabase.getDatabase(this);
+            db.clearAllTables();
+            
+            // Reiniciar IDs (sqlite_sequence)
+            db.runInTransaction(() -> {
+                db.getOpenHelper().getWritableDatabase().execSQL("DELETE FROM sqlite_sequence");
+            });
+
+            runOnUiThread(() -> {
+                android.widget.Toast.makeText(this, "Base de datos eliminada por completo", android.widget.Toast.LENGTH_LONG).show();
+                // Reiniciar la actividad para refrescar fragmentos
+                finish();
+                startActivity(getIntent());
+            });
+        });
     }
 }

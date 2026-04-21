@@ -19,15 +19,36 @@ public class EspecieRep {
     }
 
     public void insert(Especie especie) {
-        executorService.execute(() -> especieDao.insert(especie));
+        insert(especie, null);
+    }
+
+    public void insert(Especie especie, Runnable onComplete) {
+        executorService.execute(() -> {
+            especieDao.insert(especie);
+            if (onComplete != null) onComplete.run();
+        });
     }
 
     public void update(Especie especie) {
-        executorService.execute(() -> especieDao.update(especie));
+        update(especie, null);
+    }
+
+    public void update(Especie especie, Runnable onComplete) {
+        executorService.execute(() -> {
+            especieDao.update(especie);
+            if (onComplete != null) onComplete.run();
+        });
     }
 
     public void delete(Especie especie) {
-        executorService.execute(() -> especieDao.delete(especie));
+        delete(especie, null);
+    }
+
+    public void delete(Especie especie, Runnable onComplete) {
+        executorService.execute(() -> {
+            especieDao.delete(especie);
+            if (onComplete != null) onComplete.run();
+        });
     }
 
     public List<Especie> getAllEspecies() {

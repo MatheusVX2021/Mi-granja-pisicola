@@ -11,28 +11,24 @@ public class Estanque {
     private int id;
     @NonNull
     private String nombre;
-    private int volumen;
+    private double area;
     private String imagen;
-    private boolean estado;
 
     public Estanque(){}
 
-    public Estanque(@NonNull String nombre, int volumen, String imagen, boolean estado){
+    public Estanque(@NonNull String nombre, double area, String imagen){
         this.nombre = nombre;
-        this.volumen = volumen;
+        this.area = area;
         this.imagen = imagen;
-        this.estado = estado;
     }
 
     public int getId() {return id;}
     public void setId(int idEstanque) {this.id = idEstanque;}
     public String getNombre() {return nombre;}
     public void setNombre(String nombre) {this.nombre = nombre;}
-    public int getVolumen() {return volumen;}
-    public void setVolumen(int volumen) {this.volumen = volumen;}
+    public double getArea() {return area;}
+    public void setArea(double area) {this.area = area;}
     public String getImagen() {return imagen;}
     public void setImagen(String imagen) {this.imagen = imagen;}
-    public boolean getEstado() {return estado;}
-    public void setEstado(boolean estado) {this.estado = estado;}
 
 }

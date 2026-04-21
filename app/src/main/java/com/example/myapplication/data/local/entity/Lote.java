@@ -30,27 +30,47 @@ import androidx.room.PrimaryKey;
 public class Lote {
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     @NonNull
     private String nombre;
     private int idEspecie;
     private int idEstanque;
     private int idProveedor;
-
     private int cant_ini;
     private int cant_act;
     private int cant_sac;
     private int cant_ven;
+    private double peso_promedio;
+    @NonNull
+    private String fecha_entrada;
 
     public Lote() {}
 
-    public Lote(@NonNull String nombre, int idEspecie, int idEstanque, int idProveedor, int cant_ini, int cant_act) {
+    public Lote(@NonNull String nombre, int idEspecie, int idEstanque, int idProveedor, int cant_ini, int cant_act, double peso_promedio, @NonNull String fecha_entrada) {
         this.nombre = nombre;
         this.idEspecie = idEspecie;
         this.idEstanque = idEstanque;
         this.idProveedor = idProveedor;
         this.cant_ini = cant_ini;
         this.cant_act = cant_act;
+        this.peso_promedio = peso_promedio;
+        this.fecha_entrada = fecha_entrada;
+    }
+
+    public double getPeso_promedio() {
+        return peso_promedio;
+    }
+
+    public void setPeso_promedio(double peso_promedio) {
+        this.peso_promedio = peso_promedio;
+    }
+
+    @NonNull
+    public String getFecha_entrada() {
+        return fecha_entrada;
+    }
+
+    public void setFecha_entrada(@NonNull String fecha_entrada) {
+        this.fecha_entrada = fecha_entrada;
     }
 
     public int getId() {

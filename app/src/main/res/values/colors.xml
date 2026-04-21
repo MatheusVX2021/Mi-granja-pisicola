@@ -4,4 +4,13 @@
     <color name="white">#FFFFFFFF</color>
     <color name="celeste">#87CEEB</color>
     <color name="celeste_oscuro">#00BFFF</color>
+
+    <!-- Colores suaves de playa/agua -->
+    <color name="beach_sand">#FDF5E6</color>
+    <color name="water_light">#E0F7FA</color>
+    <color name="sky_light">#E1F5FE</color>
+    <color name="veg_light">#F1F8E9</color>
+    <color name="divider_color">#BDBDBD</color>
+    <color name="text_primary">#263238</color>
+    <color name="text_secondary">#546E7A</color>
 </resources>

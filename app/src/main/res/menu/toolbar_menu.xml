@@ -11,6 +11,6 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_3"
-        android:title="Acción 3"
+        android:title="Eliminar base de datos"
         app:showAsAction="never" />
 </menu>

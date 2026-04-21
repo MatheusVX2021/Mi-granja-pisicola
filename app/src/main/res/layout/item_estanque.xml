@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/water_light">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Imagen -->
+        <FrameLayout
+            android:id="@+id/flContenedorImagen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivEstanque"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+                android:src="@drawable/ic_estanque"
+                app:strokeWidth="2dp"
+                app:strokeColor="@color/celeste" />
+
+            <ImageButton
+                android:id="@+id/btnEliminarImagen"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="top|end"
+                android:background="@drawable/circle_background"
+                android:padding="4dp"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:visibility="gone"
+                app:tint="@android:color/white" />
+        </FrameLayout>
+
+        <!-- Nombre -->
+        <TextView
+            android:id="@+id/tvNombreEstanque"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Nombre Estanque"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/flContenedorImagen"
+            app:layout_constraintTop_toTopOf="@id/flContenedorImagen" />
+
+        <!-- Columna 1: Peces, Peso, Edad -->
+        <LinearLayout
+            android:id="@+id/columna1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/divider_v"
+            app:layout_constraintStart_toStartOf="@id/tvNombreEstanque"
+            app:layout_constraintTop_toBottomOf="@id/tvNombreEstanque">
+
+            <TextView
+                android:id="@+id/tvCantidadPeces"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Peces: 0"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvPesoPromedio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Peso prom: 0g"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvEdadPromedio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edad: 0 m"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Divisor Vertical -->
+        <View
+            android:id="@+id/divider_v"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="@color/divider_color"
+            app:layout_constraintBottom_toBottomOf="@id/columna1"
+            app:layout_constraintEnd_toStartOf="@+id/columna2"
+            app:layout_constraintStart_toEndOf="@id/columna1"
+            app:layout_constraintTop_toTopOf="@id/columna1" />
+
+        <!-- Columna 2: Alimentación, Área -->
+        <LinearLayout
+            android:id="@+id/columna2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/divider_v"
+            app:layout_constraintTop_toTopOf="@id/columna1">
+
+            <TextView
+                android:id="@+id/tvUltimaAlimentacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alim: --/--/--"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Área: 0 m²"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Divisor Horizontal -->
+        <View
+            android:id="@+id/divider_h"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/divider_color"
+            app:layout_constraintTop_toBottomOf="@id/columna1" />
+
+        <!-- Pie de página: Botones -->
+        <LinearLayout
+            android:id="@+id/llAcciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_h">
+
+            <!-- Añadir Lote -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/btnAnadirLote"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_add"
+                    app:tint="@color/celeste_oscuro" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lote"
+                    android:textColor="@color/celeste_oscuro"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Editar -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/btnEditar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/celeste_oscuro" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Editar"
+                    android:textColor="@color/celeste_oscuro"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Alimentar -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/btnAlimentar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_alimentar"
+                    app:tint="@color/celeste_oscuro" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alimentar"
+                    android:textColor="@color/celeste_oscuro"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Eliminar -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/btnEliminar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_delete"
+                    app:tint="@color/celeste_oscuro" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Eliminar"
+                    android:textColor="@color/celeste_oscuro"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
