@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -115,33 +115,31 @@ public class ProveedoresFragment extends Fragment {
 
     private void showProveedorDialog(@Nullable Proveedor proveedorExistente) {
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_proveedor, null);
-        EditText etNombre = dialogView.findViewById(R.id.etNombreProveedor);
-        Spinner spTipo = dialogView.findViewById(R.id.spTipoProveedor);
-        EditText etCelular = dialogView.findViewById(R.id.etCelularProveedor);
-        EditText etUrl = dialogView.findViewById(R.id.etUrlProveedor);
-
-        String[] tipos = {"Huevos", "Alimento"};
-        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, tipos);
-        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spTipo.setAdapter(adapterSpinner);
+        EditText etNombre = dialogView.findViewById(R.id.etNombre);
+        RadioGroup rgTipo = dialogView.findViewById(R.id.rgTipo);
+        RadioButton rbAlimento = dialogView.findViewById(R.id.rbAlimento);
+        RadioButton rbHuevos = dialogView.findViewById(R.id.rbHuevos);
+        EditText etCelular = dialogView.findViewById(R.id.etCelular);
+        EditText etUrl = dialogView.findViewById(R.id.etDireccion);
 
         if (proveedorExistente != null) {
             etNombre.setText(proveedorExistente.getNombre());
             etCelular.setText(proveedorExistente.getCelular());
             etUrl.setText(proveedorExistente.getDireccion());
-            if (proveedorExistente.getTipo().equalsIgnoreCase("Alimento")) {
-                spTipo.setSelection(1);
+            if (proveedorExistente.getTipo() != null && proveedorExistente.getTipo().equalsIgnoreCase("Alimento")) {
+                rbAlimento.setChecked(true);
             } else {
-                spTipo.setSelection(0);
+                rbHuevos.setChecked(true);
             }
+        } else {
+            rbAlimento.setChecked(true); // Default
         }
 
         new AlertDialog.Builder(requireContext())
-                .setTitle(proveedorExistente == null ? "Nuevo Proveedor" : "Editar Proveedor")
                 .setView(dialogView)
                 .setPositiveButton("Guardar", (dialog, which) -> {
                     String nombre = etNombre.getText().toString().trim();
-                    String tipo = spTipo.getSelectedItem().toString();
+                    String tipo = rbAlimento.isChecked() ? "Alimento" : "Huevos";
                     String celular = etCelular.getText().toString().trim();
                     String url = etUrl.getText().toString().trim();
 

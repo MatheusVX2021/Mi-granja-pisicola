@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.ClientesAdapter;
+import com.example.myapplication.ui.adapter.ClientesAdapter;
 import com.example.myapplication.data.local.entity.Cliente;
 import com.example.myapplication.data.repository.ClienteRep;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -113,9 +113,9 @@ public class ClientesFragment extends Fragment {
 
     private void showClienteDialog(@Nullable Cliente clienteExistente) {
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_cliente, null);
-        EditText etNombre = dialogView.findViewById(R.id.etNombreCliente);
-        EditText etTelefono = dialogView.findViewById(R.id.etTelefonoCliente);
-        EditText etUrl = dialogView.findViewById(R.id.etUrlCliente);
+        EditText etNombre = dialogView.findViewById(R.id.etNombre);
+        EditText etTelefono = dialogView.findViewById(R.id.etTelefono);
+        EditText etUrl = dialogView.findViewById(R.id.etDireccion);
 
         if (clienteExistente != null) {
             etNombre.setText(clienteExistente.getNombre());
@@ -124,7 +124,6 @@ public class ClientesFragment extends Fragment {
         }
 
         new AlertDialog.Builder(requireContext())
-                .setTitle(clienteExistente == null ? "Nuevo Cliente" : "Editar Cliente")
                 .setView(dialogView)
                 .setPositiveButton("Guardar", (dialog, which) -> {
                     String nombre = etNombre.getText().toString().trim();

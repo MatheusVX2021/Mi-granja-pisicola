@@ -17,7 +17,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.ui.adapter.EspecieAdapter;
 import com.example.myapplication.data.local.entity.Especie;
 import com.example.myapplication.data.repository.EspecieRep;
-import com.google.android.material.appbar.MaterialToolbar;
+import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +60,11 @@ public class EspecieListActivity extends AppCompatActivity implements EspecieAda
         adapter = new EspecieAdapter(listaEspecies, this);
         rvEspecies.setAdapter(adapter);
 
-        MaterialToolbar toolbar = findViewById(R.id.toolbarEspecies);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        // Configurar botón volver personalizado
+        View btnVolver = findViewById(R.id.btnVolver);
+        if (btnVolver != null) {
+            btnVolver.setOnClickListener(v -> finish());
+        }
 
         FloatingActionButton fab = findViewById(R.id.fabAddEspecie);
         fab.setOnClickListener(v -> mostrarDialogoEspecie(null));
@@ -80,14 +83,11 @@ public class EspecieListActivity extends AppCompatActivity implements EspecieAda
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_especie, null);
         EditText etNombre = view.findViewById(R.id.etNombreEspecie);
-        EditText etMaduracion = view.findViewById(R.id.etTiempoMaduracion);
+        EditText etMaduracion = view.findViewById(R.id.etTm);
 
         if (especieExistente != null) {
-            builder.setTitle("Editar Especie");
             etNombre.setText(especieExistente.getNombre());
             etMaduracion.setText(String.valueOf(especieExistente.getTm()));
-        } else {
-            builder.setTitle("Nueva Especie");
         }
 
         builder.setView(view);

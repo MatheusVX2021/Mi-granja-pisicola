@@ -2,15 +2,19 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="celeste">#87CEEB</color>
-    <color name="celeste_oscuro">#00BFFF</color>
 
-    <!-- Colores suaves de playa/agua -->
-    <color name="beach_sand">#FDF5E6</color>
-    <color name="water_light">#E0F7FA</color>
+    <!-- Nueva paleta Celeste -->
+    <color name="celeste">#03A9F4</color>
+    <color name="celeste_dark">#0288D1</color>
+    <color name="celeste_light">#B3E5FC</color>
+
+    <!-- Compatibilidad con layouts antiguos (Mapeados a la nueva paleta) -->
+    <color name="celeste_oscuro">#0288D1</color> <!-- Mapeado a celeste_dark -->
+    <color name="beach_sand">#F5F5F5</color> <!-- Gris muy claro -->
+    <color name="water_light">#E1F5FE</color> <!-- Mapeado a un celeste muy tenue -->
     <color name="sky_light">#E1F5FE</color>
     <color name="veg_light">#F1F8E9</color>
     <color name="divider_color">#BDBDBD</color>
-    <color name="text_primary">#263238</color>
-    <color name="text_secondary">#546E7A</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
 </resources>

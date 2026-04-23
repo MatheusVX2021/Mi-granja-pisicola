@@ -105,11 +105,9 @@ public class CatGastoActivity extends AppCompatActivity {
             etNombre.setText(catExistente.getNombre());
             iconoSeleccionado = catExistente.getImagen();
             colorSeleccionado = catExistente.getColor();
-            builder.setTitle("Editar Categoría");
         } else {
             iconoSeleccionado = "ic_pez";
             colorSeleccionado = "#B2DFDB";
-            builder.setTitle("Nueva Categoría");
         }
 
         // Configurar RV de Iconos

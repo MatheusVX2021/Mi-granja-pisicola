@@ -103,10 +103,8 @@ public class GastosFragment extends Fragment {
             etMonto.setText(String.valueOf(gastoExistente.gasto.getMonto()));
             etDescripcion.setText(gastoExistente.gasto.getDescripcion());
             etFecha.setText(gastoExistente.gasto.getFecha());
-            builder.setTitle("Editar Gasto");
         } else {
             etFecha.setText(sdf.format(new Date()));
-            builder.setTitle("Nuevo Gasto");
         }
 
         etFecha.setOnClickListener(v -> {

@@ -1,7 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.MyApplication" parent="Theme.Material3.Light.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Color principal -->
+        <item name="colorPrimary">@color/celeste_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <!-- Contenedores -->
+        <item name="colorPrimaryContainer">@color/celeste</item>
+        <item name="colorOnPrimaryContainer">@android:color/black</item>
+
+        <!-- Estilo global para FloatingActionButton -->
+        <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
     </style>
 </resources>

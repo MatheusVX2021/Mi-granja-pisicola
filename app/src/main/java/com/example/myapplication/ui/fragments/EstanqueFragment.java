@@ -30,9 +30,16 @@ import java.util.concurrent.Executors;
 
 import com.example.myapplication.data.local.entity.Alimento;
 import com.example.myapplication.data.local.entity.AlimentoWithProveedor;
+import com.example.myapplication.data.local.entity.Especie;
+import com.example.myapplication.data.local.entity.Lote;
+import com.example.myapplication.data.local.entity.Proveedor;
 import com.example.myapplication.data.local.entity.RegAlimentacion;
 import com.example.myapplication.data.repository.AlimentoRep;
+import com.example.myapplication.data.repository.EspecieRep;
+import com.example.myapplication.data.repository.LoteRep;
+import com.example.myapplication.data.repository.ProveedorRep;
 import com.example.myapplication.data.repository.RegAlimentacionRep;
+import com.google.android.material.textfield.TextInputEditText;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import java.text.SimpleDateFormat;
@@ -46,6 +53,9 @@ public class EstanqueFragment extends Fragment implements EstanqueAdapter.OnEsta
     private List<EstanqueUI> estanqueList = new ArrayList<>();
     private FloatingActionButton fabAddEstanque;
     private EstanqueRep estanqueRep;
+    private LoteRep loteRep;
+    private EspecieRep especieRep;
+    private ProveedorRep proveedorRep;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private EstanqueUI estanqueSeleccionadoParaImagen;
 
@@ -74,6 +84,10 @@ public class EstanqueFragment extends Fragment implements EstanqueAdapter.OnEsta
         fabAddEstanque = view.findViewById(R.id.fabAddEstanque);
 
         estanqueRep = new EstanqueRep(getActivity().getApplication());
+        loteRep = new LoteRep(getActivity().getApplication());
+        especieRep = new EspecieRep(getActivity().getApplication());
+        proveedorRep = new ProveedorRep(getActivity().getApplication());
+        
         adapter = new EstanqueAdapter(estanqueList, this);
         rvEstanques.setAdapter(adapter);
 
@@ -84,7 +98,6 @@ public class EstanqueFragment extends Fragment implements EstanqueAdapter.OnEsta
 
     private void mostrarDialogoNuevoEstanque() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Nuevo Estanque");
 
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_estanque, null);
         EditText etNombre = view.findViewById(R.id.etNombreEstanque);
@@ -163,7 +176,112 @@ public class EstanqueFragment extends Fragment implements EstanqueAdapter.OnEsta
 
     @Override
     public void onAddLote(EstanqueUI estanque) {
-        Toast.makeText(getContext(), "Añadiendo lote a " + estanque.getNombre(), Toast.LENGTH_SHORT).show();
+        mostrarDialogoNuevoLote(estanque);
+    }
+
+    private void mostrarDialogoNuevoLote(EstanqueUI estanqueUI) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_lote, null);
+        TextInputEditText etNombre = view.findViewById(R.id.etNombreLote);
+        Spinner spinnerEspecie = view.findViewById(R.id.spinnerEspecie);
+        Spinner spinnerEstanque = view.findViewById(R.id.spinnerEstanque);
+        Spinner spinnerProveedor = view.findViewById(R.id.spinnerProveedor);
+        TextInputEditText etCantIni = view.findViewById(R.id.etCantIni);
+        TextInputEditText etEdad = view.findViewById(R.id.etEdad);
+        TextInputEditText etPeso = view.findViewById(R.id.etPeso);
+
+        view.findViewById(R.id.layoutCantIni).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.layoutEdad).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.layoutCantSac).setVisibility(View.GONE);
+
+        executor.execute(() -> {
+            List<Especie> especies = new ArrayList<>();
+            especies.add(new Especie("Seleccionar Especie...", null, 0));
+            especies.addAll(especieRep.getAllEspecies());
+
+            List<Estanque> estanques = new ArrayList<>();
+            estanques.add(new Estanque("Seleccionar Estanque...", 0, null));
+            estanques.addAll(estanqueRep.getAllEstanques());
+
+            List<Proveedor> proveedores = new ArrayList<>();
+            proveedores.add(new Proveedor("Ninguno (Opcional)", null, null, null));
+            
+            // Filtrar solo proveedores de tipo "Huevos"
+            List<Proveedor> todosProv = proveedorRep.getAllProveedores();
+            for (Proveedor p : todosProv) {
+                if (p.getTipo() != null && p.getTipo().equalsIgnoreCase("Huevos")) {
+                    proveedores.add(p);
+                }
+            }
+
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    ArrayAdapter<Especie> espAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, especies);
+                    espAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerEspecie.setAdapter(espAdapter);
+
+                    ArrayAdapter<Estanque> estAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, estanques);
+                    estAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerEstanque.setAdapter(estAdapter);
+
+                    ArrayAdapter<Proveedor> provAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, proveedores);
+                    provAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerProveedor.setAdapter(provAdapter);
+
+                    // Pre-seleccionar y bloquear el estanque
+                    for (int i = 0; i < estanques.size(); i++) {
+                        if (estanques.get(i).getId() == estanqueUI.getId()) {
+                            spinnerEstanque.setSelection(i);
+                            spinnerEstanque.setEnabled(false);
+                            break;
+                        }
+                    }
+                });
+            }
+        });
+
+        builder.setView(view);
+        builder.setPositiveButton("Guardar", (dialog, which) -> {
+            String nombre = etNombre.getText().toString().trim();
+            Especie esp = (Especie) spinnerEspecie.getSelectedItem();
+            Proveedor prov = (Proveedor) spinnerProveedor.getSelectedItem();
+
+            if (TextUtils.isEmpty(nombre)) {
+                Toast.makeText(getContext(), "El nombre del lote es obligatorio", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (esp == null || esp.getNombre().contains("Seleccionar")) {
+                Toast.makeText(getContext(), "Debe seleccionar una especie", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Integer idEspecie = esp.getId();
+            Integer idEstanque = estanqueUI.getId();
+            Integer idProveedor = (prov == null || prov.getNombre().contains("Ninguno")) ? null : prov.getId();
+
+            int cIni = Integer.parseInt(etCantIni.getText().toString().isEmpty() ? "0" : etCantIni.getText().toString());
+            int edad = Integer.parseInt(etEdad.getText().toString().isEmpty() ? "0" : etEdad.getText().toString());
+            double peso = Double.parseDouble(etPeso.getText().toString().isEmpty() ? "0" : etPeso.getText().toString());
+
+            executor.execute(() -> {
+                String fecha = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                Lote nuevo = new Lote(nombre, idEspecie, idEstanque, idProveedor, cIni, cIni, peso, fecha);
+                nuevo.setEdad(edad);
+                nuevo.setCant_sac(0);
+                nuevo.setCant_ven(0);
+                loteRep.insert(nuevo);
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        Toast.makeText(getContext(), "Lote añadido con éxito", Toast.LENGTH_SHORT).show();
+                        cargarDatosReales();
+                    });
+                }
+            });
+        });
+        builder.setNegativeButton("Cancelar", null);
+        builder.show();
     }
 
     @Override
@@ -173,7 +291,6 @@ public class EstanqueFragment extends Fragment implements EstanqueAdapter.OnEsta
 
     private void mostrarDialogoAlimentar(EstanqueUI estanqueUI) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Alimentar Estanque: " + estanqueUI.getNombre());
 
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);

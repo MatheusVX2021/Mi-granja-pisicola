@@ -94,7 +94,6 @@ public class EstanqueAdapter extends RecyclerView.Adapter<EstanqueAdapter.Estanq
 
     private void mostrarDialogoEditar(Context context, EstanqueUI estanque) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Editar Estanque");
 
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_estanque, null);
         EditText etNombre = view.findViewById(R.id.etNombreEstanque);

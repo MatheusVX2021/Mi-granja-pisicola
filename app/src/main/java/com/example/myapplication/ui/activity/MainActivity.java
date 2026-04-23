@@ -18,13 +18,15 @@ import com.example.myapplication.data.local.database.AppDatabase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import androidx.core.splashscreen.SplashScreen;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+public class MainActivity extends AppCompatActivity {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView((int) R.layout.activity_main);
         
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -70,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(android.view.Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         int id = item.getItemId();
         
@@ -79,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.action_ver_especies) {
             startActivity(new android.content.Intent(this, EspecieListActivity.class));
             return true;
-        } else if (id == R.id.action_abrir_registros) {
+        } else if (id == R.id.action_ver_registros) {
             startActivity(new android.content.Intent(this, RegistrosActivity.class));
             return true;
         } else if (id == R.id.action_delete_db) {
@@ -118,8 +125,11 @@ public class MainActivity extends AppCompatActivity {
                 db.getOpenHelper().getWritableDatabase().execSQL("DELETE FROM sqlite_sequence");
             });
 
+            // Reinsertar datos por defecto inmediatamente
+            AppDatabase.insertarDatosPorDefecto(this);
+
             runOnUiThread(() -> {
-                android.widget.Toast.makeText(this, "Base de datos eliminada por completo", android.widget.Toast.LENGTH_LONG).show();
+                android.widget.Toast.makeText(this, "Base de datos restablecida con datos iniciales", android.widget.Toast.LENGTH_LONG).show();
                 // Reiniciar la actividad para refrescar fragmentos
                 finish();
                 startActivity(getIntent());

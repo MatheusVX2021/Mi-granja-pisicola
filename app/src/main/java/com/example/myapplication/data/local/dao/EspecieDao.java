@@ -24,6 +24,12 @@ public interface EspecieDao {
     @Query("SELECT * FROM especie ORDER BY nombre ASC")
     List<Especie> getAllEspecies();
 
+    @Query("SELECT * FROM especie ORDER BY nombre ASC")
+    List<Especie> getAllEspeciesSync();
+
+    @Insert
+    void insertSync(Especie especie);
+
     @Query("SELECT * FROM especie WHERE id = :id")
     Especie getEspecieById(int id);
 }

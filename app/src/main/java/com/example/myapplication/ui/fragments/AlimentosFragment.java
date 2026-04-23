@@ -58,9 +58,16 @@ public class AlimentosFragment extends Fragment {
 
             @Override
             public void onDeleteClick(AlimentoWithProveedor alimento) {
-                executor.execute(() -> {
-                    alimentoRep.delete(alimento.alimento);
-                });
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("Eliminar Alimento")
+                        .setMessage("¿Estás seguro de que deseas eliminar el alimento \"" + alimento.alimento.getNombre() + "\"?")
+                        .setPositiveButton("Eliminar", (dialog, which) -> {
+                            executor.execute(() -> {
+                                alimentoRep.delete(alimento.alimento);
+                            });
+                        })
+                        .setNegativeButton("Cancelar", null)
+                        .show();
             }
         });
         rvAlimentos.setAdapter(adapter);
@@ -92,7 +99,6 @@ public class AlimentosFragment extends Fragment {
         spTipo.setAdapter(adapterTipo);
 
         if (alimentoExistente != null) {
-            builder.setTitle("Editar Alimento");
             etNombre.setText(alimentoExistente.alimento.getNombre());
             etUnidades.setText(String.valueOf(alimentoExistente.alimento.getUnidades()));
             etPeso.setText(String.valueOf(alimentoExistente.alimento.getPeso()));
@@ -103,10 +109,7 @@ public class AlimentosFragment extends Fragment {
                     break;
                 }
             }
-        } else {
-            builder.setTitle("Nuevo Alimento");
         }
-
         // Cargar proveedores
         executor.execute(() -> {
             List<Proveedor> proveedores = proveedorRep.getAllProveedores();

@@ -2,9 +2,10 @@ package com.example.myapplication.data.local.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "alimento")
+@Entity(tableName = "alimento", indices = {@Index(value = {"nombre"}, unique = true)})
 public class Alimento {
     @PrimaryKey(autoGenerate = true)
     private int id;

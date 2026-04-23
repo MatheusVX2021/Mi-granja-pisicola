@@ -32,7 +32,9 @@ public class Lote {
     private int id;
     @NonNull
     private String nombre;
+    @NonNull
     private Integer idEspecie;
+    @NonNull
     private Integer idEstanque;
     private Integer idProveedor;
     private int cant_ini;
@@ -46,7 +48,7 @@ public class Lote {
 
     public Lote() {}
 
-    public Lote(@NonNull String nombre, Integer idEspecie, Integer idEstanque, Integer idProveedor, int cant_ini, int cant_act, double peso_promedio, @NonNull String fecha_entrada) {
+    public Lote(@NonNull String nombre, @NonNull Integer idEspecie, @NonNull Integer idEstanque, Integer idProveedor, int cant_ini, int cant_act, double peso_promedio, @NonNull String fecha_entrada) {
         this.nombre = nombre;
         this.idEspecie = idEspecie;
         this.idEstanque = idEstanque;
@@ -99,19 +101,21 @@ public class Lote {
         this.nombre = nombre;
     }
 
+    @NonNull
     public Integer getIdEspecie() {
         return idEspecie;
     }
 
-    public void setIdEspecie(Integer idEspecie) {
+    public void setIdEspecie(@NonNull Integer idEspecie) {
         this.idEspecie = idEspecie;
     }
 
+    @NonNull
     public Integer getIdEstanque() {
         return idEstanque;
     }
 
-    public void setIdEstanque(Integer idEstanque) {
+    public void setIdEstanque(@NonNull Integer idEstanque) {
         this.idEstanque = idEstanque;
     }
 

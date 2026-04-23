@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.core.splashscreen)
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
+    implementation(libs.mpandroidchart)
     testImplementation(libs.junit)
     testImplementation(libs.room.testing)
     androidTestImplementation(libs.ext.junit)

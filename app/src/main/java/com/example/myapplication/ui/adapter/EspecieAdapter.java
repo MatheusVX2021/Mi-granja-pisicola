@@ -50,9 +50,8 @@ public class EspecieAdapter extends RecyclerView.Adapter<EspecieAdapter.EspecieV
         if (especie.getImagen() != null && !especie.getImagen().isEmpty()) {
             holder.ivEspecie.setImageURI(Uri.parse(especie.getImagen()));
         } else {
-            holder.ivEspecie.setImageResource(R.drawable.ic_estanque);
+            holder.ivEspecie.setImageResource(R.drawable.nic_especie);
         }
-
         holder.ivEspecie.setOnClickListener(v -> listener.onImageClick(especie));
         holder.btnEditar.setOnClickListener(v -> listener.onEditClick(especie));
         holder.btnEliminar.setOnClickListener(v -> listener.onDeleteClick(especie));

@@ -70,8 +70,6 @@ public class VentasFragment extends Fragment implements VentaAdapter.OnVentaActi
 
     private void mostrarDialogoVenta(@Nullable VentaUI ventaUI) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(ventaUI == null ? "Nueva Venta" : "Editar Venta");
-
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_venta, null);
         Spinner spinnerLote = view.findViewById(R.id.spinnerLoteVenta);
         Spinner spinnerCliente = view.findViewById(R.id.spinnerClienteVenta);
@@ -201,6 +199,7 @@ public class VentasFragment extends Fragment implements VentaAdapter.OnVentaActi
                 cargarDatos();
             });
         });
+        builder.setView(view);
         builder.setNegativeButton("Cancelar", null);
         builder.show();
     }

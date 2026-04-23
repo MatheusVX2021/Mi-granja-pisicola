@@ -24,7 +24,6 @@ public class AlimentoAdapter extends RecyclerView.Adapter<AlimentoAdapter.Alimen
         void onEditClick(AlimentoWithProveedor alimento);
         void onDeleteClick(AlimentoWithProveedor alimento);
     }
-
     public AlimentoAdapter(List<AlimentoWithProveedor> listaAlimentos, OnAlimentoClickListener listener) {
         this.listaAlimentos = listaAlimentos;
         this.listener = listener;

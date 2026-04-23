@@ -34,6 +34,7 @@ import com.example.myapplication.data.repository.EstanqueRep;
 import com.example.myapplication.data.repository.LoteRep;
 import com.example.myapplication.data.repository.ProveedorRep;
 import com.example.myapplication.ui.adapter.LoteAdapter;
+import com.example.myapplication.ui.adapter.SpinnerWithIconAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import java.text.SimpleDateFormat;
@@ -83,7 +84,6 @@ public class LotesFragment extends Fragment implements LoteAdapter.OnLoteActionL
 
     private void mostrarDialogoLote(@Nullable LoteUI loteUI) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(loteUI == null ? "Nuevo Lote" : "Editar Lote");
 
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_lote, null);
         TextInputEditText etNombre = view.findViewById(R.id.etNombreLote);
@@ -119,29 +119,33 @@ public class LotesFragment extends Fragment implements LoteAdapter.OnLoteActionL
 
         executor.execute(() -> {
             List<Especie> especies = new ArrayList<>();
-            especies.add(new Especie("Ninguno", null, 0));
+            especies.add(new Especie("Seleccionar Especie...", null, 0));
             especies.addAll(especieRep.getAllEspecies());
 
             List<Estanque> estanques = new ArrayList<>();
-            estanques.add(new Estanque("Ninguno", 0, null));
+            estanques.add(new Estanque("Seleccionar Estanque...", 0, null));
             estanques.addAll(estanqueRep.getAllEstanques());
 
             List<Proveedor> proveedores = new ArrayList<>();
-            proveedores.add(new Proveedor("Ninguno", null, null, null));
-            proveedores.addAll(proveedorRep.getAllProveedores());
+            proveedores.add(new Proveedor("Ninguno (Opcional)", null, null, null));
+            
+            // Filtrar solo proveedores de tipo "Huevos"
+            List<Proveedor> todosProv = proveedorRep.getAllProveedores();
+            for (Proveedor p : todosProv) {
+                if (p.getTipo() != null && p.getTipo().equalsIgnoreCase("Huevos")) {
+                    proveedores.add(p);
+                }
+            }
 
             if (getActivity() != null) {
                 getActivity().runOnUiThread(() -> {
-                    ArrayAdapter<Especie> espAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, especies);
-                    espAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    SpinnerWithIconAdapter<Especie> espAdapter = new SpinnerWithIconAdapter<>(getContext(), especies, R.drawable.nic_especie);
                     spinnerEspecie.setAdapter(espAdapter);
 
-                    ArrayAdapter<Estanque> estAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, estanques);
-                    estAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    SpinnerWithIconAdapter<Estanque> estAdapter = new SpinnerWithIconAdapter<>(getContext(), estanques, R.drawable.ic_estanque);
                     spinnerEstanque.setAdapter(estAdapter);
 
-                    ArrayAdapter<Proveedor> provAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, proveedores);
-                    provAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    SpinnerWithIconAdapter<Proveedor> provAdapter = new SpinnerWithIconAdapter<>(getContext(), proveedores, R.drawable.ic_persona);
                     spinnerProveedor.setAdapter(provAdapter);
 
                     if (loteUI != null) {
@@ -180,9 +184,19 @@ public class LotesFragment extends Fragment implements LoteAdapter.OnLoteActionL
                 return;
             }
 
-            Integer idEspecie = (esp == null || esp.getNombre().equals("Ninguno")) ? null : esp.getId();
-            Integer idEstanque = (est == null || est.getNombre().equals("Ninguno")) ? null : est.getId();
-            Integer idProveedor = (prov == null || prov.getNombre().equals("Ninguno")) ? null : prov.getId();
+            if (esp == null || esp.getNombre().contains("Seleccionar")) {
+                Toast.makeText(getContext(), "Debe seleccionar una especie", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (est == null || est.getNombre().contains("Seleccionar")) {
+                Toast.makeText(getContext(), "Debe seleccionar un estanque", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Integer idEspecie = esp.getId();
+            Integer idEstanque = est.getId();
+            Integer idProveedor = (prov == null || prov.getNombre().contains("Ninguno")) ? null : prov.getId();
             
             int cIni = Integer.parseInt(etCantIni.getText().toString().isEmpty() ? "0" : etCantIni.getText().toString());
             int edad = Integer.parseInt(etEdad.getText().toString().isEmpty() ? "0" : etEdad.getText().toString());
@@ -246,7 +260,6 @@ public class LotesFragment extends Fragment implements LoteAdapter.OnLoteActionL
 
     private void mostrarDialogoReubicacion(LoteUI loteUI) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Reubicar Peces: " + loteUI.getNombre());
 
         EstanqueRep estanqueRep = new EstanqueRep(requireActivity().getApplication());
         
@@ -372,10 +385,11 @@ public class LotesFragment extends Fragment implements LoteAdapter.OnLoteActionL
     @Override
     public void onSacrificar(LoteUI loteUI) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Sacrificar Peces - " + loteUI.getNombre());
 
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_sacrificar, null);
         TextInputEditText etCant = view.findViewById(R.id.etCantSacrificar);
+        TextView tvTitulo = view.findViewById(R.id.tvTitulo);
+        tvTitulo.setText("Sacrificar - " + loteUI.getNombre());
 
         builder.setView(view);
         builder.setPositiveButton("Confirmar", (dialog, which) -> {

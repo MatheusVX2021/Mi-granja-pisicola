@@ -1,8 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.MyApplication" parent="Theme.Material3.Light.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Color principal -->
+        <item name="colorPrimary">@color/celeste</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <!-- Contenedores -->
+        <item name="colorPrimaryContainer">@color/celeste_light</item>
+        <item name="colorOnPrimaryContainer">@android:color/black</item>
+
+        <!-- Estilo global para FloatingActionButton -->
+        <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
+    </style>
+
+    <style name="Widget.App.FloatingActionButton" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="android:src">@android:drawable/ic_input_add</item>
+        <item name="backgroundTint">@color/celeste</item>
+        <item name="tint">@android:color/white</item>
     </style>
 
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
@@ -32,7 +46,7 @@
 
     <!-- Theme para evitar el doble splash en Android 12+ -->
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_app</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_app_square_bk_removed</item>
         <item name="windowSplashScreenBackground">@android:color/white</item>
         <item name="postSplashScreenTheme">@style/Theme.MyApplication</item>
     </style>
