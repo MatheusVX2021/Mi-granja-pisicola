@@ -31,4 +31,10 @@ public class CatGasto {
     public void setImagen(String imagen) {this.imagen = imagen;}
     public String getColor() {return color;}
     public void setColor(String color) {this.color = color;}
+
+    @NonNull
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

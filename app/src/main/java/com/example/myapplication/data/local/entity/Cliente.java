@@ -28,4 +28,10 @@ public class Cliente {
     public void setDireccion(String direccion) {this.direccion = direccion;}
     public String getTelefono() {return telefono;}
     public void setTelefono(String telefono) {this.telefono = telefono;}
+
+    @NonNull
+    @Override
+    public String toString() {
+        return nombre != null ? nombre : "";
+    }
 }

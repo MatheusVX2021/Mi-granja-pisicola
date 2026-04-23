@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.myapplication.data.local.entity.Venta;
+import com.example.myapplication.data.model.VentaUI;
 
 import java.util.List;
 
@@ -21,8 +22,12 @@ public interface VentaDao {
     @Delete
     void delete(Venta venta);
 
-    @Query("SELECT * FROM venta ORDER BY fecha DESC")
-    List<Venta> getAllVentas();
+    @Query("SELECT v.*, l.nombre as nombreLote, c.nombre as nombreCliente " +
+            "FROM venta v " +
+            "JOIN lote l ON v.idLote = l.id " +
+            "JOIN cliente c ON v.idCliente = c.id " +
+            "ORDER BY v.fecha DESC")
+    List<VentaUI> getAllVentasUI();
 
     @Query("SELECT * FROM venta WHERE id = :id")
     Venta getVentaById(int id);

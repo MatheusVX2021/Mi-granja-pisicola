@@ -32,20 +32,21 @@ public class Lote {
     private int id;
     @NonNull
     private String nombre;
-    private int idEspecie;
-    private int idEstanque;
-    private int idProveedor;
+    private Integer idEspecie;
+    private Integer idEstanque;
+    private Integer idProveedor;
     private int cant_ini;
     private int cant_act;
     private int cant_sac;
     private int cant_ven;
     private double peso_promedio;
+    private int edad;
     @NonNull
     private String fecha_entrada;
 
     public Lote() {}
 
-    public Lote(@NonNull String nombre, int idEspecie, int idEstanque, int idProveedor, int cant_ini, int cant_act, double peso_promedio, @NonNull String fecha_entrada) {
+    public Lote(@NonNull String nombre, Integer idEspecie, Integer idEstanque, Integer idProveedor, int cant_ini, int cant_act, double peso_promedio, @NonNull String fecha_entrada) {
         this.nombre = nombre;
         this.idEspecie = idEspecie;
         this.idEstanque = idEstanque;
@@ -54,6 +55,14 @@ public class Lote {
         this.cant_act = cant_act;
         this.peso_promedio = peso_promedio;
         this.fecha_entrada = fecha_entrada;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
 
     public double getPeso_promedio() {
@@ -90,27 +99,27 @@ public class Lote {
         this.nombre = nombre;
     }
 
-    public int getIdEspecie() {
+    public Integer getIdEspecie() {
         return idEspecie;
     }
 
-    public void setIdEspecie(int idEspecie) {
+    public void setIdEspecie(Integer idEspecie) {
         this.idEspecie = idEspecie;
     }
 
-    public int getIdEstanque() {
+    public Integer getIdEstanque() {
         return idEstanque;
     }
 
-    public void setIdEstanque(int idEstanque) {
+    public void setIdEstanque(Integer idEstanque) {
         this.idEstanque = idEstanque;
     }
 
-    public int getIdProveedor() {
+    public Integer getIdProveedor() {
         return idProveedor;
     }
 
-    public void setIdProveedor(int idProveedor) {
+    public void setIdProveedor(Integer idProveedor) {
         this.idProveedor = idProveedor;
     }
 
@@ -144,5 +153,11 @@ public class Lote {
 
     public void setCant_ven(int cant_ven) {
         this.cant_ven = cant_ven;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return nombre != null ? nombre : "";
     }
 }

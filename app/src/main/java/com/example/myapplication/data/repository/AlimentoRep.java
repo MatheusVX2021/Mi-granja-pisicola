@@ -4,6 +4,8 @@ import android.app.Application;
 import com.example.myapplication.data.local.dao.AlimentoDao;
 import com.example.myapplication.data.local.database.AppDatabase;
 import com.example.myapplication.data.local.entity.Alimento;
+import com.example.myapplication.data.local.entity.AlimentoWithProveedor;
+import androidx.lifecycle.LiveData;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,11 +32,15 @@ public class AlimentoRep {
         executorService.execute(() -> alimentoDao.delete(alimento));
     }
 
-    public List<Alimento> getAllAlimentos() {
-        return alimentoDao.getAllAlimentos();
+    public LiveData<List<AlimentoWithProveedor>> getAllAlimentosWithProveedor() {
+        return alimentoDao.getAllAlimentosWithProveedor();
     }
 
     public Alimento getAlimentoById(int id) {
         return alimentoDao.getAlimentoById(id);
+    }
+
+    public AlimentoDao getAlimentoDao() {
+        return alimentoDao;
     }
 }

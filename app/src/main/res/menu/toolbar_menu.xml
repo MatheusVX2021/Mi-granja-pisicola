@@ -2,15 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_1"
-        android:title="Acción 1"
+        android:id="@+id/action_ver_cat_gastos"
+        android:title="Ver categoria de gastos"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_2"
-        android:title="Acción 2"
+        android:id="@+id/action_ver_especies"
+        android:title="Ver especies"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_3"
+        android:id="@+id/action_abrir_registros"
+        android:title="Abrir Registros"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_delete_db"
         android:title="Eliminar base de datos"
         app:showAsAction="never" />
 </menu>

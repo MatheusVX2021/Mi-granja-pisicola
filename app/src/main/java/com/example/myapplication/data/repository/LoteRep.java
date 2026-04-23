@@ -19,19 +19,23 @@ public class LoteRep {
     }
 
     public void insert(Lote lote) {
-        executorService.execute(() -> loteDao.insert(lote));
+        loteDao.insert(lote);
     }
 
     public void update(Lote lote) {
-        executorService.execute(() -> loteDao.update(lote));
+        loteDao.update(lote);
     }
 
     public void delete(Lote lote) {
-        executorService.execute(() -> loteDao.delete(lote));
+        loteDao.delete(lote);
     }
 
     public List<Lote> getAllLotes() {
         return loteDao.getAllLotes();
+    }
+
+    public List<com.example.myapplication.data.model.LoteUI> getAllLotesUI() {
+        return loteDao.getAllLotesUI();
     }
 
     public Lote getLoteById(int id) {

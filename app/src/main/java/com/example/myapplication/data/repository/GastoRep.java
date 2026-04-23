@@ -4,6 +4,8 @@ import android.app.Application;
 import com.example.myapplication.data.local.dao.GastoDao;
 import com.example.myapplication.data.local.database.AppDatabase;
 import com.example.myapplication.data.local.entity.Gasto;
+import com.example.myapplication.data.local.entity.GastoWithCategory;
+import androidx.lifecycle.LiveData;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,6 +34,10 @@ public class GastoRep {
 
     public List<Gasto> getAllGastos() {
         return gastoDao.getAllGastos();
+    }
+
+    public LiveData<List<GastoWithCategory>> getAllGastosWithCategory() {
+        return gastoDao.getAllGastosWithCategory();
     }
 
     public Gasto getGastoById(int id) {

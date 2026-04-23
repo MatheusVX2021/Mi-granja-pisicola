@@ -24,6 +24,14 @@ public interface LoteDao {
     @Query("SELECT * FROM lote ORDER BY nombre ASC")
     List<Lote> getAllLotes();
 
+    @Query("SELECT l.*, e.nombre as nombreEspecie, e.imagen as imagenEspecie, est.nombre as nombreEstanque, p.nombre as nombreProveedor " +
+           "FROM lote l " +
+           "INNER JOIN especie e ON l.idEspecie = e.id " +
+           "INNER JOIN estanque est ON l.idEstanque = est.id " +
+           "INNER JOIN proveedor p ON l.idProveedor = p.id " +
+           "ORDER BY l.nombre ASC")
+    List<com.example.myapplication.data.model.LoteUI> getAllLotesUI();
+
     @Query("SELECT * FROM lote WHERE id = :id")
     Lote getLoteById(int id);
 

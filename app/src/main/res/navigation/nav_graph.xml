@@ -6,22 +6,22 @@
 
     <fragment
         android:id="@+id/fragment1"
-        android:name="com.example.myapplication.fragments.ResumenFragment"
+        android:name="com.example.myapplication.ui.fragments.ResumenFragment"
         android:label="Resumen" />
     <fragment
         android:id="@+id/fragment2"
-        android:name="com.example.myapplication.fragments.EstanqueFragment"
+        android:name="com.example.myapplication.ui.fragments.EstanqueFragment"
         android:label="Estanque" />
     <fragment
         android:id="@+id/fragment3"
-        android:name="com.example.myapplication.fragments.InventarioFragment"
+        android:name="com.example.myapplication.ui.fragments.InventarioFragment"
         android:label="Inventario" />
     <fragment
         android:id="@+id/fragment4"
-        android:name="com.example.myapplication.fragments.FinanzasFragment"
+        android:name="com.example.myapplication.ui.fragments.FinanzasFragment"
         android:label="Finanzas" />
     <fragment
         android:id="@+id/fragment5"
-        android:name="com.example.myapplication.fragments.PersonasFragment"
+        android:name="com.example.myapplication.ui.fragments.PersonasFragment"
         android:label="Personas" />
 </navigation>

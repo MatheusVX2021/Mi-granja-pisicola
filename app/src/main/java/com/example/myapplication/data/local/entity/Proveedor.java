@@ -33,4 +33,10 @@ public class Proveedor {
     public void setDireccion(String direccion) {this.direccion = direccion;}
     public String getCelular() {return celular;}
     public void setCelular(String celular) {this.celular = celular;}
+
+    @NonNull
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

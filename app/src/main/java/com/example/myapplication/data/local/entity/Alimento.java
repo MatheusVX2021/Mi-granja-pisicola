@@ -11,13 +11,13 @@ public class Alimento {
     private int idProveedor;
     @NonNull
     private String nombre;
-    private double tipo;
+    private String tipo;
     private int unidades;
     private int peso;
 
     public Alimento(){}
 
-    public Alimento(int idProveedor, @NonNull String nombre, double tipo, int unidades, int peso){
+    public Alimento(int idProveedor, @NonNull String nombre, String tipo, int unidades, int peso){
         this.idProveedor = idProveedor;
         this.nombre = nombre;
         this.tipo = tipo;
@@ -31,8 +31,8 @@ public class Alimento {
     public void setIdProveedor(int idProveedor) {this.idProveedor = idProveedor;}
     public String getNombre() {return nombre;}
     public void setNombre(String nombre) {this.nombre = nombre;}
-    public double getTipo() {return tipo;}
-    public void setTipo(double tipo) {this.tipo = tipo;}
+    public String getTipo() {return tipo;}
+    public void setTipo(String tipo) {this.tipo = tipo;}
     public int getUnidades() {return unidades;}
     public void setUnidades(int unidades) {this.unidades = unidades;}
     public int getPeso() {return peso;}

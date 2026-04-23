@@ -4,6 +4,7 @@ import android.app.Application;
 import com.example.myapplication.data.local.dao.VentaDao;
 import com.example.myapplication.data.local.database.AppDatabase;
 import com.example.myapplication.data.local.entity.Venta;
+import com.example.myapplication.data.model.VentaUI;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,8 +31,8 @@ public class VentaRep {
         executorService.execute(() -> ventaDao.delete(venta));
     }
 
-    public List<Venta> getAllVentas() {
-        return ventaDao.getAllVentas();
+    public List<VentaUI> getAllVentasUI() {
+        return ventaDao.getAllVentasUI();
     }
 
     public Venta getVentaById(int id) {

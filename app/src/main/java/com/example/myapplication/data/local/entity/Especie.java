@@ -33,5 +33,9 @@ public class Especie {
     public int getTm() {return tm;}
     public void setTm(int tm) {this.tm = tm;}
 
-
+    @NonNull
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

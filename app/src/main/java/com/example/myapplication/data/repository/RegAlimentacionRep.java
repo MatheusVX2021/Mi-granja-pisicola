@@ -34,6 +34,10 @@ public class RegAlimentacionRep {
         return regAlimentacionDao.getAllAlimentaciones();
     }
 
+    public List<com.example.myapplication.data.model.RegAlimentacionUI> getAllAlimentacionesUI() {
+        return regAlimentacionDao.getAllAlimentacionesUI();
+    }
+
     public RegAlimentacion getAlimentacionById(int id) {
         return regAlimentacionDao.getAlimentacionById(id);
     }

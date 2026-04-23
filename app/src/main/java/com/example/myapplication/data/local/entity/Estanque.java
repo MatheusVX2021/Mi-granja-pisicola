@@ -31,4 +31,9 @@ public class Estanque {
     public String getImagen() {return imagen;}
     public void setImagen(String imagen) {this.imagen = imagen;}
 
+    @NonNull
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }
